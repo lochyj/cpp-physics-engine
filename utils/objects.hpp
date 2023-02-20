@@ -9,6 +9,7 @@ struct object
     sf::Vector2f    acceleration;
     float           radius = 10.0f;
     float           mass = 1.0f;
+    float           friction_constant = 1.0f;
     sf::Color       color = sf::Color::White;
 
     object() = default;

@@ -45,7 +45,7 @@ std::vector<object> calculate_collisions(std::vector<object> objects) {
 // Acceleration
 // F = ma
 
-bool space = false;
+bool space = true;
 
 sf::Vector2f gravity = sf::Vector2f(0.0f, 1000.0f);
 
@@ -53,8 +53,8 @@ std::vector<object> process_gravity(std::vector<object> objects) {
     if (space) {
         for (auto& obj : objects) {
             // Temp
-            sf::Vector2f center = { 500.0f, 500.0f };
-            float m1 = 100.0f;
+            sf::Vector2f center = { 500.0f, 250.0f };
+            float m1 = 10000.0f;
 
             // Make global
             const float G = 0.81f;

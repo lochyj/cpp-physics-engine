@@ -10,6 +10,11 @@ const int window_height = 1000;
 
 const int iterations = 9;
 
+sf::Color generate_random_color() {
+    auto color = sf::Color::White;
+    return color;
+}
+
 int main(int argc, char* argv[])
 {
     // Window constants
@@ -46,7 +51,7 @@ int main(int argc, char* argv[])
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            obj.position = {10.0f, 500.0f};
+            obj.position = {250.0f, 250.0f};
             obj.acceleration = { 0.0f, 0.0f };
             obj.mass = 100.0f;
             obj.radius = 20.0f;
