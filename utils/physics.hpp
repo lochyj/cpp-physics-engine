@@ -45,7 +45,7 @@ std::vector<object> calculate_collisions(std::vector<object> objects) {
 // Acceleration
 // F = ma
 
-bool space = true;
+bool space = false;
 
 sf::Vector2f gravity = sf::Vector2f(0.0f, 1000.0f);
 

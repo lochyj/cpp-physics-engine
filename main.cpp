@@ -8,7 +8,7 @@
 const int window_width = 1000;
 const int window_height = 1000;
 
-const int iterations = 9;
+const int iterations = 20;
 
 sf::Color generate_random_color() {
     auto color = sf::Color::White;
