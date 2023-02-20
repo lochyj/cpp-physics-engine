@@ -28,8 +28,17 @@ struct object
     {
         old_position = position - (velocity * deltaTime);
     }
+
+    void updatePosition(float deltaTime) {
+        const sf::Vector2f displacement = position - old_position;
+        old_position = position;
+        position      = position + displacement + acceleration * (deltaTime * deltaTime);
+
+        acceleration = {};
+    }
 };
 
 object create_random_object(float maxRadius, float minRadius, sf::Vector2f acceleration, sf::Vector2f position) {
-    
+    auto newObject = object(position, minRadius);
+    return newObject;
 }

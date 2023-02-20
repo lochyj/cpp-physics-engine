@@ -45,34 +45,46 @@ std::vector<object> calculate_collisions(std::vector<object> objects) {
 // Acceleration
 // F = ma
 
+bool space = false;
 
-void process_gravity(std::vector<object> objects) {
-    for (auto& obj : objects) {
-        // Temp
-        sf::Vector2f center = { 500.0f, 500.0f };
-        float m1 = 1000.0f;
+sf::Vector2f gravity = sf::Vector2f(0.0f, 1000.0f);
 
-        // Make global
-        const float G = 0.81f;
+std::vector<object> process_gravity(std::vector<object> objects) {
+    if (space) {
+        for (auto& obj : objects) {
+            // Temp
+            sf::Vector2f center = { 500.0f, 500.0f };
+            float m1 = 100.0f;
 
-        sf::Vector2f r = center - obj.position;
-        float m2 = obj.mass;
+            // Make global
+            const float G = 0.81f;
 
-        // This is equal to Fg = G((m1m2)/r^2), where Fg is objAcceleration
-        auto objAcceleration = G * (
-            sf::Vector2f(
-                pow(r.x, 2) / (m1 * m2),
-                pow(r.y, 2) / (m1 * m2)
-            )
-        );
+            sf::Vector2f r = center - obj.position;
+            float m2 = obj.mass;
 
-        obj.accelerate(objAcceleration);
+            // This is equal to Fg = G((m1m2)/r^2), where Fg is objAcceleration
+            auto objAcceleration = G * (
+                sf::Vector2f(
+                    pow(r.x, 2) / (m1 * m2),
+                    pow(r.y, 2) / (m1 * m2)
+                )
+                );
 
+            obj.accelerate(objAcceleration);
+
+        }
     }
+    else {
+        for (auto& obj : objects) {
+            obj.accelerate(gravity);
+        }
+    }
+    
+    return objects;
 }
 
 // TODO: make this not a circle in the future
-void apply_boundaries(std::vector<object> objects) {
+std::vector<object> apply_boundaries(std::vector<object> objects) {
     sf::Vector2f center = { 500.0f, 500.0f };
     float radius = 500.0f;
     for (auto& obj : objects) {
@@ -86,9 +98,17 @@ void apply_boundaries(std::vector<object> objects) {
             obj.position = center - n * (radius - obj.radius);
         }
     }
+    return objects;
 }
 
-void update(std::vector<object> objects) {
-    process_gravity(objects);
-    apply_boundaries(objects);
+std::vector<object> update(std::vector<object> objects, int iterations) {
+    for (int i = iterations; i > 0; --i) {
+        objects = process_gravity(objects);
+        objects = apply_boundaries(objects);
+        objects = calculate_collisions(objects);
+        for (auto& obj : objects) {
+            obj.updatePosition(0.01f);
+        }
+    }
+    return objects;
 }
