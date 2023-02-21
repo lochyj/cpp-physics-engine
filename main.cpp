@@ -6,9 +6,9 @@
 #include "utils/renderer.hpp"
 
 const int window_width = 1000;
-const int window_height = 1000;
+const int window_height = 1050;
 
-const int iterations = 9;
+const int iterations = 10;
 
 sf::Color generate_random_color() {
     auto color = sf::Color::White;
@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     sf::RenderWindow window(sf::VideoMode(window_width, window_height), "Physics Engine", sf::Style::Close | sf::Style::Titlebar | sf::Style::None, settings);
 
     // Settings
-    settings.antialiasingLevel = 2;
+    settings.antialiasingLevel = 10;
     window.setVerticalSyncEnabled(true);
 
     // Engine constants
@@ -31,14 +31,6 @@ int main(int argc, char* argv[])
 
     // Create an object
     object obj;
-    obj.position = { 200.0f, 500.0f };
-    obj.acceleration = { 0.0f, 0.0f };
-    obj.mass = 10.0f;
-    obj.radius = 20.0f;
-    obj.color = sf::Color::White;
-    objects.push_back(obj);
-    objects.push_back(obj);
-    
     
     while (window.isOpen())
     {
@@ -51,11 +43,12 @@ int main(int argc, char* argv[])
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            obj.position = {250.0f, 250.0f};
-            obj.acceleration = { 0.0f, 0.0f };
-            obj.mass = 100.0f;
-            obj.radius = 20.0f;
-            obj.color = sf::Color::White;
+            obj.position = {500.0f, 500.0f};
+            obj.old_position = { 500.1f, 500.0f };
+            obj.acceleration = { 10.5f, 0.6f };
+            obj.mass = 10.0f;
+            obj.radius = 15.0f;
+            obj.color = sf::Color::Black;
             objects.push_back(obj);
         }
 
@@ -64,6 +57,10 @@ int main(int argc, char* argv[])
         objects = update(objects, iterations);
 
         draw_objects(objects, window);
+
+        draw_sim_time(clock, window);
+
+        clock.restart().asMilliseconds();
 
         window.display();
     }

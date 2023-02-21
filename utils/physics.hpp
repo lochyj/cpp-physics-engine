@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include<stdio.h>
 
 #include "objects.hpp"
 
@@ -47,17 +48,17 @@ std::vector<object> calculate_collisions(std::vector<object> objects) {
 
 bool space = true;
 
-sf::Vector2f gravity = sf::Vector2f(0.0f, 1000.0f);
+sf::Vector2f gravity = sf::Vector2f(0.0f, 100000.0f);
 
 std::vector<object> process_gravity(std::vector<object> objects) {
     if (space) {
         for (auto& obj : objects) {
             // Temp
-            sf::Vector2f center = { 500.0f, 250.0f };
-            float m1 = 10000.0f;
+            sf::Vector2f center = { 500.0f, 500.0f };
+            float m1 = 1.0f;
 
             // Make global
-            const float G = 0.81f;
+            const float G = 0.981f;
 
             sf::Vector2f r = center - obj.position;
             float m2 = obj.mass;
@@ -68,8 +69,8 @@ std::vector<object> process_gravity(std::vector<object> objects) {
                     pow(r.x, 2) / (m1 * m2),
                     pow(r.y, 2) / (m1 * m2)
                 )
-                );
-
+            );
+            printf("x: %f, y: %f", obj.position.x, obj.position.y);
             obj.accelerate(objAcceleration);
 
         }
@@ -103,12 +104,12 @@ std::vector<object> apply_boundaries(std::vector<object> objects) {
 
 std::vector<object> update(std::vector<object> objects, int iterations) {
     for (int i = iterations; i > 0; --i) {
-        objects = process_gravity(objects);
-        objects = apply_boundaries(objects);
         objects = calculate_collisions(objects);
-        for (auto& obj : objects) {
-            obj.updatePosition(0.01f);
-        }
+    }
+    objects = process_gravity(objects);
+    objects = apply_boundaries(objects);
+    for (auto& obj : objects) {
+        obj.updatePosition(0.001f);
     }
     return objects;
 }
