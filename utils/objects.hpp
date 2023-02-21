@@ -2,6 +2,8 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 
+
+
 struct object
 {
     sf::Vector2f    position;
@@ -43,3 +45,25 @@ object create_random_object(float maxRadius, float minRadius, sf::Vector2f accel
     auto newObject = object(position, minRadius);
     return newObject;
 }
+
+
+struct grid
+{
+    float x;
+    float y;
+    float size = 1.0f;
+    std::vector<object> objects;
+
+    void add_objects(std::vector<object> objectsToAdd)
+    {
+	    for(auto& obj : objectsToAdd)
+	    {
+            objects.push_back(obj);
+	    }
+    }
+
+    void reset()
+    {
+        objects.clear();
+    }
+};

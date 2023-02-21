@@ -12,7 +12,7 @@ void draw_objects(std::vector<object> objects, sf::RenderTarget& window) {
 
     circle.setFillColor(sf::Color::White);
     circle.setRadius(500.0f);
-    circle.setPosition({ 500.0f, 500.0f });
+    circle.setPosition({ 503.0f, 503.0f });
     window.draw(circle);
 
     circle.setPointCount(15);
@@ -28,7 +28,7 @@ void draw_objects(std::vector<object> objects, sf::RenderTarget& window) {
     
 }
 
-void draw_sim_time(sf::Clock clock, sf::RenderTarget& window) {
+void draw_sim_time(sf::Clock clock, sf::RenderTarget& window, int balls) {
     auto time = clock.getElapsedTime();
     int32_t tms = time.asMilliseconds();
     std::string str = std::to_string(tms);
@@ -40,10 +40,18 @@ void draw_sim_time(sf::Clock clock, sf::RenderTarget& window) {
 
     sf::Text text;
     text.setFont(font);
-    text.setString(str);
+    text.setString("Time Per Frame: " + str);
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);
     text.setStyle(sf::Text::Bold);
+    window.draw(text);
+
+    text.setFont(font);
+    text.setString("Number of Balls: " + std::to_string(balls));
+    text.setCharacterSize(24);
+    text.setFillColor(sf::Color::White);
+    text.setStyle(sf::Text::Bold);
+    text.setPosition({ 0.0f, 24.0f });
     window.draw(text);
 
 }
