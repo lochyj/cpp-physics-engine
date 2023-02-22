@@ -46,7 +46,7 @@ std::vector<object> calculate_collisions(std::vector<object> objects) {
 // Acceleration
 // F = ma
 
-bool space = true;
+bool space = false;
 
 sf::Vector2f gravity = sf::Vector2f(0.0f, 100000.0f);
 
@@ -98,6 +98,7 @@ std::vector<object> process_gravity(std::vector<object> objects) {
 std::vector<object> apply_boundaries(std::vector<object> objects) {
     sf::Vector2f center = { 500.0f, 500.0f };
     float radius = 500.0f;
+    float boundaries_friction = 100.0f;
     for (auto& obj : objects) {
         
         // R is the distance from the center of the container to the center of the object
@@ -106,21 +107,23 @@ std::vector<object> apply_boundaries(std::vector<object> objects) {
 
         if (dist > (radius - obj.radius)) {
             const sf::Vector2f  n = R / dist;
+            //obj.acceleration = sf::Vector2f(obj.friction_constant - boundaries_friction / obj.acceleration.x, obj.friction_constant - boundaries_friction / obj.acceleration.y);
             obj.position = center - n * (radius - obj.radius);
         }
+
     }
 
     return objects;
 }
 
-std::vector<object> update(std::vector<object> objects, int iterations) {
+std::vector<object> update(std::vector<object> objects, int iterations, std::vector<grid> Grid) {
     for (int i = iterations; i > 0; --i) {
         objects = calculate_collisions(objects);
     }
     objects = process_gravity(objects);
     objects = apply_boundaries(objects);
     for (auto& obj : objects) {
-        obj.updatePosition(0.002f);
+        obj.updatePosition(0.002f, Grid);
     }
     return objects;
 }

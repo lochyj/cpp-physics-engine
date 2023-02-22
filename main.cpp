@@ -25,6 +25,18 @@ int main(int argc, char* argv[])
     settings.antialiasingLevel = 2;
     window.setVerticalSyncEnabled(true);
 
+    // Create Grid
+    std::vector<grid> Grid;
+
+    for (int i = 0; i < window_width; i++) {
+        for (int j = 0; j < window_height; j++) {
+            grid temp;
+            temp.x = i;
+            temp.y = j;
+            Grid.push_back(temp);
+        }
+    }
+
     // Engine constants
     std::vector<object> objects;
     sf::Clock clock;
@@ -40,8 +52,7 @@ int main(int argc, char* argv[])
     obj.radius = 5.0f;
     obj.color = sf::Color::Black;
     obj.accelerate({ -10.0f, -100.0f });
-    objects.push_back(obj);
-    
+    int objects_added = 0;
     
     while (window.isOpen())
     {
@@ -50,6 +61,17 @@ int main(int argc, char* argv[])
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                 window.close();
             }
+        }
+
+        if (objects_added < 1000) {
+            objects.push_back(obj);
+            objects_added++;
+
+            objects.push_back(obj);
+            objects_added++;
+
+            objects.push_back(obj);
+            objects_added++;
         }
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -65,7 +87,7 @@ int main(int argc, char* argv[])
 
         window.clear(sf::Color::Black);
 
-        objects = update(objects, iterations);
+        objects = update(objects, iterations, Grid);
 
         draw_objects(objects, window);
 

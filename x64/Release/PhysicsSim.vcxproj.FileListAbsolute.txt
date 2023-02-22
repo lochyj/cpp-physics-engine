@@ -1,1 +1,2 @@
 C:\Users\lochy\OneDrive\Documents\GitHub\cpp-physics-engine\x64\Release\PhysicsSim.exe
+C:\Users\lochy\Documents\GitHub\cpp-physics-engine\x64\Release\PhysicsSim.exe

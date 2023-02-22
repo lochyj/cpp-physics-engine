@@ -7,7 +7,7 @@
 
 void draw_objects(std::vector<object> objects, sf::RenderTarget& window) {
     auto circle = sf::CircleShape();
-    circle.setPointCount(50);
+    circle.setPointCount(500);
     circle.setOrigin(500.0f, 500.0f);
 
     circle.setFillColor(sf::Color::White);
