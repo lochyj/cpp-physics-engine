@@ -1,18 +1,3 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (Verlet.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿E:\VS\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (Verlet.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   main.cpp
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(5,62): error C2065: 'grid': undeclared identifier
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(5,55): error C2923: 'std::vector': 'grid' is not a valid template type argument for parameter '_Ty'
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(5): message : see declaration of 'grid'
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(5,55): error C2976: 'std::vector': too few template arguments
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\vector(496): message : see declaration of 'std::vector'
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(35,54): error C2065: 'grid': undeclared identifier
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(35,47): error C2923: 'std::vector': 'grid' is not a valid template type argument for parameter '_Ty'
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(35): message : see declaration of 'grid'
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(35,47): error C2976: 'std::vector': too few template arguments
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\vector(496): message : see declaration of 'std::vector'
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(40,1): error C2664: 'int find_grid_from_coordinates(float,float,std::vector)': cannot convert argument 3 from 'std::vector' to 'std::vector'
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(40,1): message : Cannot copy construct class 'std::vector' due to ambiguous copy constructors or no available copy constructor
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(5,5): message : see declaration of 'find_grid_from_coordinates'
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\physics.hpp(126,40): error C2664: 'void object::updatePosition(float,std::vector)': cannot convert argument 2 from 'std::vector<grid,std::allocator<grid>>' to 'std::vector'
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\physics.hpp(126,36): message : No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-C:\Users\lochy\Documents\GitHub\cpp-physics-engine\utils\objects.hpp(35,10): message : see declaration of 'object::updatePosition'
+  PhysicsSim.vcxproj -> C:\Users\lochy\OneDrive\Documents\GitHub\cpp-physics-engine\x64\Release\PhysicsSim.exe

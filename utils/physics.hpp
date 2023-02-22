@@ -8,7 +8,7 @@
 
 // TODO: Make this use threading and use the updated version of collision detection using a grid later on...
 std::vector<object> calculate_collisions(std::vector<object> objects) {
-    const float response_coefficient = 0.75f;
+    const float response_coefficient = 1.0f;
     const int   objects_count = objects.size();
 
     // Iterate on all objects
@@ -46,21 +46,18 @@ std::vector<object> calculate_collisions(std::vector<object> objects) {
 // Acceleration
 // F = ma
 
-bool space = false;
+bool space = true;
 
-sf::Vector2f gravity = sf::Vector2f(0.0f, 100000.0f);
+sf::Vector2f gravity = sf::Vector2f(0.0f, 9000.0f);
 
 std::vector<object> process_gravity(std::vector<object> objects) {
     if (space) {
-        float G = 0.81; // gravitational constant
-        sf::Vector2f center(500.0f, 500.0f);
         for (auto& obj : objects) {
-            /*// Temp
             sf::Vector2f center = { 500.0f, 500.0f };
-            float m1 = 1.0f;
+            float m1 = 10.0f;
 
             // Make global
-            const float G = 6.67e-11f;
+            const float G = 500.0f;
 
             sf::Vector2f r = center - obj.position;
             float m2 = obj.mass;
@@ -68,26 +65,15 @@ std::vector<object> process_gravity(std::vector<object> objects) {
             // This is equal to Fg = G((m1m2)/r^2), where Fg is objAcceleration
             auto objAcceleration = G *
                 sf::Vector2f(
-                    pow(r.x, 2) / (m1 * m2),
-                    pow(r.y, 2) / (m1 * m2)
+                    r.x / (m1 * m2),
+                    r.y/ (m1 * m2)
                 );
-            //printf(" x: %f, y: %f", obj.position.x, obj.position.y);
-            obj.accelerate(objAcceleration);
-            */
-
-            sf::Vector2f dir = center - obj.position;
-            float dist = sqrt(G * (dir.x * dir.x) + G * (dir.y * dir.y)); // calculate distance using the Pythagorean theorem
-            if (dist > 0) {
-                dir.x /= dist;
-                dir.y /= dist;
-            }
-            float force = G * (dist * dist);
-            obj.accelerate(dir * force); // add outward force
+            obj.accelerate(objAcceleration / obj.friction_constant);
         }
     }
     else {
         for (auto& obj : objects) {
-            obj.accelerate(gravity);
+            obj.accelerate(gravity );
         }
     }
     
@@ -109,6 +95,8 @@ std::vector<object> apply_boundaries(std::vector<object> objects) {
             const sf::Vector2f  n = R / dist;
             //obj.acceleration = sf::Vector2f(obj.friction_constant - boundaries_friction / obj.acceleration.x, obj.friction_constant - boundaries_friction / obj.acceleration.y);
             obj.position = center - n * (radius - obj.radius);
+            obj.old_position = center - n * (radius - obj.radius);
+            obj.acceleration = obj.acceleration / 10.0f;
         }
 
     }
@@ -116,14 +104,18 @@ std::vector<object> apply_boundaries(std::vector<object> objects) {
     return objects;
 }
 
-std::vector<object> update(std::vector<object> objects, int iterations, std::vector<grid> Grid) {
-    for (int i = iterations; i > 0; --i) {
-        objects = calculate_collisions(objects);
+std::vector<object> update(std::vector<object> objects, int iterations, int sub_iterations) {
+    for (int i = iterations; i > 0; --i)
+    {
+        for (int j = iterations; j > 0; --j) {
+            objects = calculate_collisions(objects);
+        }
+        objects = process_gravity(objects);
+        objects = apply_boundaries(objects);
     }
-    objects = process_gravity(objects);
-    objects = apply_boundaries(objects);
+    
     for (auto& obj : objects) {
-        obj.updatePosition(0.002f, Grid);
+        obj.updatePosition(0.002f);
     }
     return objects;
 }

@@ -2,9 +2,23 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 
-int find_grid_from_coordinates(float x, float y, std::vector<grid> gridVec);
-
 struct object;
+struct grid;
+
+struct grid
+{
+    float x;
+    float y;
+    float size = 1.0f;
+    std::vector<object> objects;
+
+    void add_object(object obj);
+
+    void reset()
+    {
+        objects.clear();
+    }
+};
 
 struct object
 {
@@ -34,54 +48,16 @@ struct object
         old_position = position - (velocity * deltaTime);
     }
 
-    void updatePosition(float deltaTime, std::vector<grid> Grid, object Object) {
+    void updatePosition(float deltaTime) {
         const sf::Vector2f displacement = position - old_position;
         old_position = position;
         position      = position + displacement + acceleration * (deltaTime * deltaTime);
-
-        std::vector<object> a;
-        a.push_back(Object);
-
-        Grid[find_grid_from_coordinates(position.x, position.y, Grid)].add_objects(a);
 
         acceleration = {};
     }
 };
 
-object create_random_object(float maxRadius, float minRadius, sf::Vector2f acceleration, sf::Vector2f position) {
-    auto newObject = object(position, minRadius);
+inline object create_random_object(float maxRadius, float minRadius, sf::Vector2f acceleration, sf::Vector2f position) {
+    const auto newObject = object(position, minRadius);
     return newObject;
-}
-
-
-struct grid
-{
-    float x;
-    float y;
-    float size = 1.0f;
-    std::vector<object> objects;
-
-    void add_objects(std::vector<object> objectsToAdd)
-    {
-	    for(auto& obj : objectsToAdd)
-	    {
-            objects.push_back(obj);
-	    }
-    }
-
-    void reset()
-    {
-        objects.clear();
-    }
-};
-
-int find_grid_from_coordinates(float x, float y, std::vector<grid> gridVec) {
-    x = round(x);
-    y = round(y);
-
-    for (int i = 0; i < gridVec.size(); i++) {
-        if (gridVec[i].x == x && gridVec[i].y == y) {
-            return i;
-        }
-    }
 }
