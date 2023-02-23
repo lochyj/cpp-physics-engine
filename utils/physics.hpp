@@ -66,7 +66,7 @@ std::vector<object> process_gravity(std::vector<object> objects) {
             auto objAcceleration = G *
                 sf::Vector2f(
                     r.x / (m1 * m2),
-                    r.y/ (m1 * m2)
+                    r.y / (m1 * m2)
                 );
             obj.accelerate(objAcceleration / obj.friction_constant);
         }
