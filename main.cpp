@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        if (objects_added < 1000) {
+        if (objects_added < 100) {
 
             for (int i = 0; i < 1; i++)
             {
