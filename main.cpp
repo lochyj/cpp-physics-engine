@@ -10,11 +10,6 @@ const int window_height = 1003;
 const int iterations = 2;
 const int sub_iterations = 20;
 
-sf::Color generate_random_color() {
-    auto color = sf::Color::White;
-    return color;
-}
-
 int main(int argc, char* argv[])
 {
     // Window constants
